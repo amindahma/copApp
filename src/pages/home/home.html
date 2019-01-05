@@ -1,29 +1,190 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Cut Order Planning
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
-  <ion-list>
+<ion-content class="login-content"  >
+  <div class="login-box">
+    <form (ngSubmit)="cutOrderPlan()" #registerForm="ngForm">
+<!-- 
+        <ion-grid>
+            <ion-row>
+              <ion-col col-12>This column will take 12 columns</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-6>This column will take 6 columns</ion-col>
+            </ion-row>
+        </ion-grid> -->
 
-    <ion-item>
-      <ion-label fixed>Username</ion-label>
-      <ion-input type="text" value=""></ion-input>
-    </ion-item>
-  
-    <ion-item>
-      <ion-label fixed>Password</ion-label>
-      <ion-input type="password"></ion-input>
-    </ion-item>
-  
-  </ion-list>
+          <ion-list inset>
+            <ion-row>
+            <ion-col col-2>
+                <ion-badge style="font-size:18px;" color="secondary" >Ply Height</ion-badge>
+            </ion-col>
+            <ion-col >
+                <ion-input type="number" placeholder="................." name="plyHeight" [(ngModel)]="plyHeight" required></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col col-2>
+                  <ion-badge style="font-size:18px;" color="secondary" >Garment Count</ion-badge>
+              </ion-col>
+              <ion-col >
+              <ion-input type="number" placeholder="................." name="garmentCount" [(ngModel)]="garmentCount" required></ion-input>
+            </ion-col>
+          </ion-row>
+
+            <!-- <ion-item> -->
+            <!-- Garment Sizes -->
+            <!-- </ion-item> -->
+
+            <ion-row>
+                <ion-col col-2>
+                    <ion-badge style="font-size:18px;" color="secondary" >XXS</ion-badge>
+              </ion-col>
+              <ion-col >
+              <ion-input type="number" placeholder="................." name="xxsSize" [(ngModel)]="xxsSize" ></ion-input>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+              <ion-col col-2>
+                  <ion-badge style="font-size:18px;" color="secondary" >XS</ion-badge>
+              </ion-col>
+              <ion-col >
+              <ion-input type="number" placeholder="................." name="xsSize" [(ngModel)]="xsSize" ></ion-input>
+            </ion-col>
+          </ion-row>
+            
+          <ion-row>
+              <ion-col col-2>
+                  <ion-badge style="font-size:18px;"  color="secondary" >S</ion-badge>
+              </ion-col>
+              <ion-col >
+              <ion-input type="number" placeholder="................." name="sSize" [(ngModel)]="sSize" ></ion-input>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+              <ion-col col-2>
+                  <ion-badge style="font-size:18px;" color="secondary" >M</ion-badge>
+              </ion-col>
+              <ion-col >
+              <ion-input type="number" placeholder="................." name="mSize" [(ngModel)]="mSize" ></ion-input>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+              <ion-col col-2>
+                  <ion-badge style="font-size:18px;" color="secondary" >L</ion-badge>
+              </ion-col>
+              <ion-col >
+              <ion-input type="number" placeholder="................." name="lSize" [(ngModel)]="lSize" ></ion-input>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+              <ion-col col-2>
+                  <ion-badge style="font-size:18px;" color="secondary" >XL</ion-badge>
+              </ion-col>
+              <ion-col >
+              <ion-input type="number" placeholder="................." name="xlSize" [(ngModel)]="xlSize" ></ion-input>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+              <ion-col col-2>
+                  <ion-badge style="font-size:18px;" color="secondary" >XXL</ion-badge>
+              </ion-col>
+              <ion-col >
+              <ion-input type="number" placeholder="................." name="xxlSize" [(ngModel)]="xxlSize" ></ion-input>
+            </ion-col>
+          </ion-row>
+
+          </ion-list>
+      
+      <ion-row>
+        <ion-col class="signup-col">
+            <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Plan</button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </div>
+  <div>
+    <br>
+    <br>
+  </div>
+  <div>
+      <ion-list>
+          <ion-row>
+              <ion-col >
+                  
+              </ion-col>
+              <ion-col >
+                  <ion-badge color="dark" width-50>XXS</ion-badge>
+              </ion-col>
+              <ion-col>
+                  <ion-badge color="dark">XS</ion-badge>
+              </ion-col>
+              <ion-col >
+                  <ion-badge color="dark">S</ion-badge>
+              </ion-col>
+              <ion-col >
+                  <ion-badge color="dark">M</ion-badge>
+              </ion-col>
+              <ion-col >
+                  <ion-badge color="dark">L</ion-badge>
+              </ion-col>
+              <ion-col >
+                  <ion-badge color="dark">XL</ion-badge>
+              </ion-col>
+              <ion-col >
+                  <ion-badge color="dark">XXL</ion-badge>
+              </ion-col>
+          </ion-row>
+          <ion-row *ngFor="let item of result">
+              <ion-col >
+                  
+              </ion-col>
+              <ion-col >
+                  <ion-badge color="light" width-50>{{item[0]}}</ion-badge>
+              </ion-col>
+              <ion-col>
+                  <ion-badge color="light">{{item[1]}}</ion-badge>
+              </ion-col>
+              <ion-col >
+                  <ion-badge color="light">{{item[2]}}</ion-badge>
+              </ion-col>
+              <ion-col >
+                  <ion-badge color="light">{{item[3]}}</ion-badge>
+              </ion-col>
+              <ion-col >
+                  <ion-badge color="light">{{item[4]}}</ion-badge>
+              </ion-col>
+              <ion-col >
+                  <ion-badge color="light">{{item[5]}}</ion-badge>
+              </ion-col>
+              <ion-col >
+                  <ion-badge color="light">{{item[6]}}</ion-badge>
+              </ion-col>
+          </ion-row>
+          <!-- <button ion-item *ngFor="let item of result"> -->
+
+            <!-- <ion-label stacked primary>{{item[0]}}</ion-label>
+            <ion-label stacked primary>{{item[1]}}</ion-label>
+            <ion-label stacked primary>{{item[2]}}</ion-label>
+            <ion-label stacked primary>{{item[3]}}</ion-label>
+            <ion-label stacked primary>{{item[4]}}</ion-label>
+            <ion-label stacked primary>{{item[5]}}</ion-label>
+            <ion-label stacked primary>{{item[6]}}</ion-label> -->
+
+            
+            <!-- </button> -->
+      </ion-list>
+  </div>
 </ion-content>
 
 
