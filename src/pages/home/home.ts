@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -18,9 +18,10 @@ export class HomePage {
   xxlSize:Number;
   xxsSize: Number;
   result:number[][];
+  
 
-
-  constructor(public navCtrl: NavController) {
+ 
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController) {
     let xxsSize= 0;
   }
 
@@ -28,12 +29,37 @@ export class HomePage {
     console.log(Number(this.plyHeight)+10);
   }
 
+  presentLoading() {
+    const loader = this.loadingCtrl.create({
+      content: "Please wait...",
+      duration: 1000
+    });
+    loader.present();
+  }
+
   cutOrderPlan(){
+    this.presentLoading();
     let counter = 0;
     let totalCost = 0;
     let sizeMix =0;
     let fabricCost = 0;
     this.result = [ [0,0,0,0,0,0,0],
+                              [0,0,0,0,0,0,0],
+                              [0,0,0,0,0,0,0],
+                              [0,0,0,0,0,0,0],
+                              [0,0,0,0,0,0,0],
+                              [0,0,0,0,0,0,0],
+                              [0,0,0,0,0,0,0],
+                              [0,0,0,0,0,0,0],
+                              [0,0,0,0,0,0,0],
+                              [0,0,0,0,0,0,0],
+                              [0,0,0,0,0,0,0],
+                              [0,0,0,0,0,0,0],
+                              [0,0,0,0,0,0,0],
+                              [0,0,0,0,0,0,0],
+                              [0,0,0,0,0,0,0],
+                              [0,0,0,0,0,0,0],
+                              [0,0,0,0,0,0,0],
                               [0,0,0,0,0,0,0],
                               [0,0,0,0,0,0,0],
                               [0,0,0,0,0,0,0],
@@ -58,7 +84,7 @@ export class HomePage {
     let sizeListThird = sizeList.slice(0);
     let sizeListFifth = [0,0,0,0,0,0,0];
     
-    for (var j = 0; j < 10; j++) {
+    for (var j = 0; j < 20; j++) {
         let sum=0;
         sum = Number(this.xsSize)+Number(this.sSize)+Number(this.mSize)+Number(this.lSize)+
               Number(this.xlSize)+Number(this.xxlSize)+Number(this.xxsSize);
@@ -104,7 +130,8 @@ export class HomePage {
                         if( max == sizeListFourth[k]){
                             // Cells(19, k).Value = Cells(19, k).Value - Range("q4").Value
                             sizeListThird[k] = sizeListThird[k] - Number(this.plyHeight)
-                            this.result[j][k] = Number(this.plyHeight) 
+                            this.result[j][k] = Number(this.plyHeight) /Number(this.plyHeight)
+
                             sizeMix = sizeMix + 1
                             sizeListFourth[k] = null
                             break;
@@ -113,8 +140,9 @@ export class HomePage {
                   }
                 }
         }else{
+            let difference = 0;
+            let secondCounter = 0;
             let sizeListFourth = sizeListThird.slice(0);
-            
             let min =0;
             for (var a = 0; a < Number(this.garmentCount); a++) {
                 let max2 = 0;
@@ -122,11 +150,13 @@ export class HomePage {
                 if( max2 == 0 ){
                     break;
                 }
+                
                 for (var b = 0; b < sizeList.length; b++) {
                     if( max2 == sizeListFourth[b]){
                         // Cells(21, b).Value = Cells(20, b)
                         sizeListFifth[b] = sizeListFourth[b]
                         sizeListFourth[b] = null;
+                        secondCounter = secondCounter+1
                         // Cells(20, b).Value = Empty
                         break;
                     }
@@ -146,19 +176,39 @@ export class HomePage {
             if( min > Number(this.plyHeight)){
                 min = Number(this.plyHeight)
             }
+            let tempGarmentCount =Number(this.garmentCount)
+            difference = tempGarmentCount -secondCounter
+            if(secondCounter== Number(this.garmentCount)){
+                difference = 1
+            }else{
+                 difference++   
+            }
             for (var c = 0; c < sizeList.length; c++) {
-                if (sizeListFifth[c] > 0){
-                    sizeListFifth[c]= sizeListFifth[c] - min
-                    sizeListThird[c] = sizeListThird[c] - min
-                    sizeListFirst[c] = sizeListFirst[c] - min
-                    this.result[j][c] = min
+                let max3 = 0;
+                max3= Math.max(...sizeListFifth)
+                if ((sizeListFifth[c] > 0) && (difference>1) && (max3>=(difference*min)&&(max3==Number(sizeListFifth[c])))){
+                    sizeListFifth[c]= sizeListFifth[c] - (difference*min)
+                    sizeListThird[c] = sizeListThird[c] - (difference*min)
+                    sizeListFirst[c] = sizeListFirst[c] - (difference*min)
+                    this.result[j][c] = (difference*min)
                     sizeMix = sizeMix + 1
                     sizeListFifth[c] = 0
+                    break;
+                }
+                else{
+                    if(sizeListFifth[c] >= min){
+                    sizeListFifth[c]= sizeListFifth[c] - (min)
+                    sizeListThird[c] = sizeListThird[c] - (min)
+                    sizeListFirst[c] = sizeListFirst[c] - (min)
+                    this.result[j][c] = (min)
+                    sizeMix = sizeMix + 1
+                    sizeListFifth[c] = 0
+                    }
                 }
             }
-        }
 
         counter = 0
+        secondCounter = 0
         
         // if (sizeMix = 4){
 
@@ -176,8 +226,9 @@ export class HomePage {
 
     // sizeMix = 0
     // Range("R15").Value = totalfabriccost + noOfLay * Range("Q7").Value
-      }
-      console.log(this.result);
+        }
+        console.log(this.result);
+    }
   }
   
 }

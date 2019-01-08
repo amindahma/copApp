@@ -69,6 +69,7 @@
           </ion-row>
 
           <ion-row>
+              
               <ion-col col-2>
                   <ion-badge style="font-size:18px;" color="secondary" >M</ion-badge>
               </ion-col>
@@ -120,11 +121,11 @@
   <div>
       <ion-list>
           <ion-row>
-              <ion-col >
+              <ion-col>
                   
               </ion-col>
               <ion-col >
-                  <ion-badge color="dark" width-50>XXS</ion-badge>
+                  <ion-badge color="dark">XXS</ion-badge>
               </ion-col>
               <ion-col>
                   <ion-badge color="dark">XS</ion-badge>
@@ -146,30 +147,32 @@
               </ion-col>
           </ion-row>
           <ion-row *ngFor="let item of result">
-              <ion-col >
-                  
-              </ion-col>
-              <ion-col >
-                  <ion-badge color="light" width-50>{{item[0]}}</ion-badge>
-              </ion-col>
-              <ion-col>
-                  <ion-badge color="light">{{item[1]}}</ion-badge>
-              </ion-col>
-              <ion-col >
-                  <ion-badge color="light">{{item[2]}}</ion-badge>
-              </ion-col>
-              <ion-col >
-                  <ion-badge color="light">{{item[3]}}</ion-badge>
-              </ion-col>
-              <ion-col >
-                  <ion-badge color="light">{{item[4]}}</ion-badge>
-              </ion-col>
-              <ion-col >
-                  <ion-badge color="light">{{item[5]}}</ion-badge>
-              </ion-col>
-              <ion-col >
-                  <ion-badge color="light">{{item[6]}}</ion-badge>
-              </ion-col>
+              <!-- <div> -->
+                <ion-col >
+                    
+                </ion-col>
+                <ion-col >
+                    <ion-badge color="light" [hidden]="item[0] == 0">{{item[0]}}</ion-badge>
+                </ion-col>
+                <ion-col>
+                    <ion-badge color="light" [hidden]="item[1] == 0">{{item[1]}}</ion-badge>
+                </ion-col>
+                <ion-col >
+                    <ion-badge color="light" [hidden]="item[2] == 0">{{item[2]}}</ion-badge>
+                </ion-col>
+                <ion-col >
+                    <ion-badge color="light" [hidden]="item[3] == 0">{{item[3]}}</ion-badge>
+                </ion-col>
+                <ion-col >
+                    <ion-badge color="light" [hidden]="item[4] == 0">{{item[4]}}</ion-badge>
+                </ion-col>
+                <ion-col >
+                    <ion-badge color="light" [hidden]="item[5] == 0">{{item[5]}}</ion-badge>
+                </ion-col>
+                <ion-col >
+                    <ion-badge color="light" [hidden]="item[6] == 0">{{item[6]}}</ion-badge>
+                </ion-col>
+            <!-- </div> -->
           </ion-row>
           <!-- <button ion-item *ngFor="let item of result"> -->
 
